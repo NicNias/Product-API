@@ -13,3 +13,14 @@ spring:
       hibernate:
         format_sql: true
         default_schema: ${DB_SCHEMA}
+
+server:
+  servlet:
+    context-path: /api-products
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+  use-management-port: false

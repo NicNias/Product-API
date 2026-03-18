@@ -11,12 +11,18 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.Instant;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<ProblemDetail> handleBaseException(BaseException ex) {
         HttpStatus status = switch (ex) {
@@ -52,6 +58,16 @@ public class GlobalExceptionHandler {
         pb.setTitle("Violação de integridade");
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(pb);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ProblemDetail> handleNoResourceFound(NoResourceFoundException ex) {
+        log.error("Erro inesperado: ", ex);
+        ProblemDetail pb = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        pb.setTitle("Recurso não encontrado");
+        pb.setProperty("timestamp", Instant.now());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pb);
     }
 
     @ExceptionHandler(Exception.class)
