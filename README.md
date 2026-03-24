@@ -9,6 +9,7 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Gradle](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
 ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
 
 </div>
 
@@ -99,6 +100,7 @@ src/main/java/com/app/products/
 | MapStruct | 1.5.5 |
 | Lombok | — |
 | Springdoc OpenAPI (Swagger) | 2.8.6 |
+| Spring Boot Actuator & Micrometer | — |
 | Gradle | — |
 
 ---
@@ -172,6 +174,20 @@ Com a aplicação em execução, acesse:
 ```
 http://localhost:8080/api-products/swagger-ui.html
 ```
+
+---
+
+## 📊 Métricas e Monitoramento
+
+A aplicação utiliza o **Spring Boot Actuator** em conjunto com o **Micrometer** para expor métricas da JVM e da API em um formato compatível com o Prometheus.
+
+Com a aplicação em execução, as métricas podem ser acessadas em:
+
+```
+http://localhost:8080/api-products/actuator/prometheus
+```
+
+Esses dados estão prontos para serem raspados (scraping) pelo **Prometheus** e visualizados em ferramentas como o **Grafana**.
 
 ---
 
